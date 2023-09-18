@@ -1,0 +1,29 @@
+<div class="container-nav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="d-flex justify-content-between w-100 container-lg">
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand" href="#">
+                    <span class="text-dark title">Management</span><span class="text-danger title"> System</span>
+                </a>
+            </div>
+            <div class="d-flex align-items-center">
+                <!-- Form for large devices -->
+                <form class="form-inline d-none d-lg-block" method="get" action="#">
+                    <div class="input-group">
+                        <input class="form-control" type="search" placeholder="Search ..." aria-label="Search"
+                            name="query" required>
+                        <button type="submit" class="btn btn-warning">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <!-- Form for medium and small devices -->
+    <form class="form-inline d-block d-lg-none mt-2" method="get" action="#">
+        <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search ..." aria-label="Search"
+                name="query" required>
+            <button type="submit" class="btn btn-warning">Search</button>
+        </div>
+    </form>
+</div>
