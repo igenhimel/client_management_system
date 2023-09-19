@@ -1,0 +1,8 @@
+{% if alert %}
+<div class="alert-container d-flex justify-content-center align-items-center">
+    <div id="auto-hide-alert" class="alert alert-danger alert-dismissible fade show"
+        style="position: fixed; z-index: 100;" role="alert">
+        <strong>{{ alert }}</strong> 
+    </div>
+</div>
+{% endif %}

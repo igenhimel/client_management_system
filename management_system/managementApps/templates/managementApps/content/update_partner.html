@@ -1,0 +1,29 @@
+{% include 'managementApps/partials/header.html' %}
+
+{% include 'managementApps/partials/nav.html' %}
+
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+        <h5 class="card-title text-center text-danger">Update Partner</h5>
+        <form action="{% url 'managementApps:update_partner' partner.partner_id %}" method="post" id="siteForm">
+            {% csrf_token %}
+        
+            <div class="form-group">
+              <label for="sitename">Partner Name</label>
+              <input type="text" class="form-control" name="partnername" id="partner-name" value="{{ partner.partnername }}" readonly disabled>
+            </div>
+        
+            <div class="form-group">
+              <label for="partnerkey">Partner Key</label>
+              <input type="text" class="form-control" name="partnerkey" value="{{ partner.partnerkey }}" required>
+            </div>
+            <input type=button class="btn btn-primary mt-3" value="Back" onClick="javascript:history.go(-1);">
+            <button type="submit" class="btn btn-primary mt-3 text-center">Save</button>
+          </form>
+    </div>
+  </div>
+  </div>
+
+  {% include 'managementApps/partials/footer.html' %}

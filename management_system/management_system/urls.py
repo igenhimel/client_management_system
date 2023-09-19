@@ -20,12 +20,15 @@ from django.conf.urls.static import static
 from managementApps import views
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.CustomLoginView.as_view(),name='root_page'),
     path('app/', include('managementApps.urls')),
     
     ]
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
