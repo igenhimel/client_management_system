@@ -12,58 +12,34 @@
         {% include 'managementApps/partials/alert.html' %}
         <span class="h3">Site Config</span>
         <hr>
-        <button type="" class="float-end btn btn-success me-3" data-bs-toggle="modal" data-bs-target="#exampleModal"> + Add
-          Site</button>
+        <a href="/app/home/add-site" class="float-end btn btn-primary me-3"> + Add
+          Site</a>
       </div>
       <table class="table table-striped">
         <thead>
-          <tr>
+          <tr class="text-center">
             <th scope="col">Serial</th>
             <th scope="col">Site Name</th>
             <th scope="col">Site Key</th>
-            <th scope="col-2">Update</th>
+            <th scope="col">DNS</th>
+            <th scope="col">Company</th>
+            <th scope="col">Country</th>
+            <th scope="col">Update</th>
           </tr>
         </thead>
         <tbody>
           {% for site in sites %}
-          <tr>
+          <tr class="text-center">
             <th scope="row">{{site.site_id}}</th>
             <td>{{site.sitename}}</td>
             <td>{{site.sitekey}}</td>
-            <td><a href="{% url 'managementApps:update_site' site.site_id %}" class="btn btn-danger" >Edit/Update</a></td>
-
-          </tr>
+            <td>{{site.dns}}</td>
+            <td>{{site.company_name}}</td>
+            <td>{{site.country_name}}</td>
+            <td> <a href="/app/home/site/update/{{site.site_id}}" class="update-site btn btn-dark">Update</a></td>
          {% endfor %}
         </tbody>
       </table>
-    </div>
-  </div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Site</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <form action="{% url 'managementApps:create_site' %}" method="post" id="siteForm">
-        {% csrf_token %}
-      <div class="modal-body">
-          <label for="sitename">Site Name</label>
-          <input type="text" class="form-control mt-2" name="sitename" id="site-name"  required>
-          <br>
-          <label for="sitename">Site Key</label>
-          <input type="text" class="form-control mt-2" name="sitekey" required>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="addSite">Save</button>
-      </div>
-      </form>
     </div>
   </div>
 </div>

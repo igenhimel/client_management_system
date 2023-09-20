@@ -6,24 +6,55 @@
 <div class="container">
   <div class="card">
     <div class="card-body">
-        <h5 class="card-title text-center text-danger">Update Site</h5>
-        <form action="{% url 'managementApps:update_site' site.site_id %}" method="post" id="siteForm">
-            {% csrf_token %}
-        
-            <div class="form-group">
-              <label for="sitename">Site Name</label>
-              <input type="text" class="form-control" name="sitename" id="site-name" value="{{ site.sitename }}" readonly disabled>
-            </div>
-        
-            <div class="form-group">
-              <label for="sitekey">Site Key</label>
-              <input type="text" class="form-control" name="sitekey" value="{{ site.sitekey }}" required>
-            </div>
-            <input type=button class="btn btn-primary mt-3" value="Back" onClick="javascript:history.go(-1);">
-            <button type="submit" class="btn btn-primary mt-3 text-center">Save</button>
-          </form>
+      <h5 class="card-title text-center text-danger">Update Site</h5>
+      <form action="{% url 'managementApps:update_site' site.site_id %}" method="post" id="siteForm">
+        {% csrf_token %}
+
+        <div class="row">
+          <div class="col-12">
+
+            <label for="sitename">Site Name</label>
+            <input type="text" class="form-control bg-secondary text-light" name="sitename" id="site-name" value="{{ site.sitename }}" readonly>
+
+          </div>
+
+          <div class="col-12">
+
+            <label for="sitekey">Site Key</label>
+            <input type="text" class="form-control" name="sitekey" value="{{ site.sitekey }}" required>
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+
+            <label for="sitedns">DNS</label>
+            <input type="text" class="form-control" name="dns" id="site-dns" value="{{ site.dns}}" required>
+
+          </div>
+
+          <div class="col">
+
+            <label for="sitecompany">Site Key</label>
+            <input type="text" class="form-control" name="sitecompany" value="{{ site.company_name }}" required>
+
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <label for="sitecountry">Site Name</label>
+            <input type="text" class="form-control" name="sitecountry" id="site-country" value="{{ site.country_name }}"
+              required>
+
+          </div>
+        </div>
+        <input type=button class="btn btn-primary mt-3" value="Back" onClick="javascript:history.go(-1);">
+        <button type="submit" class="btn btn-primary mt-3 text-center">Save</button>
+      </form>
     </div>
   </div>
-  </div>
+</div>
 
-  {% include 'managementApps/partials/footer.html' %}
+{% include 'managementApps/partials/footer.html' %}

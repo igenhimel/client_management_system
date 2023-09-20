@@ -14,3 +14,4 @@ if (alertElement) {
         alertElement.style.display = 'none';
     }, 2000);
 }
+

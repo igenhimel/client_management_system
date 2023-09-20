@@ -1,0 +1,55 @@
+
+{% include 'managementApps/partials/header.html' %}
+
+{% include 'managementApps/partials/nav.html' %}
+
+        <div class="card">
+            <div class="card-header">
+                <h2>Add User</h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="{% url 'managementApps:add_user' %}">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="superuser" class="form-label">Superuser:</label>
+                        <select class="form-select" id="superuser" name="superuser">
+                            <option value="yes">Yes</option>
+                            <option value="no">No</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Permissions:</label><br>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="read_permission" name="permissions" value="read">
+                            <label class="form-check-label" for="read_permission">Read</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="write_permission" name="permissions" value="write">
+                            <label class="form-check-label" for="write_permission">Write</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Add User</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    {% include 'managementApps/partials/footer.html' %}

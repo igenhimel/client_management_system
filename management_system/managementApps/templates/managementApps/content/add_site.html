@@ -1,0 +1,50 @@
+{% include 'managementApps/partials/header.html' %}
+
+{% include 'managementApps/partials/nav.html' %}
+
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+        <h5 class="card-title text-center text-danger">Add Site</h5>
+        <form action="{% url 'managementApps:create_site' %}" method="post" id="siteForm">
+            {% csrf_token %}
+        
+            <div class="row">
+                <div class="col">
+                  <label for="sitename">Site Name</label>
+                <input type="text" class="form-control mt-2" name="sitename" id="site-name"  required>
+                
+                <div class="col">
+                  <label for="sitekey">Site Key</label>
+                <input type="text" class="form-control mt-2" name="sitekey" required>
+      
+                </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="dns">DNS</label>
+                <input type="text" class="form-control mt-2" name="dns"  required>
+                </div>
+                <div class="col">
+                  <label for="company_name">Company Name</label>
+                <input type="text" class="form-control mt-2" name="company_name"  required>
+                </div>
+              </div>
+      
+              <div class="row">
+                <div class="col">
+                  <label for="country_name">Country Name</label>
+                  <input type="text" class="form-control mt-2" name="country_name"  required>
+                </div>
+              </div>
+
+            <input type=button class="btn btn-primary mt-3" value="Back" onClick="javascript:history.go(-1);">
+            <button type="submit" class="btn btn-primary mt-3 text-center">Save</button>
+          </form>
+    </div>
+  </div>
+  </div>
+
+  {% include 'managementApps/partials/footer.html' %}

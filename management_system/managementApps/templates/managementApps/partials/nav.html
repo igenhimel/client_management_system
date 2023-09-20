@@ -16,7 +16,11 @@
                     </div>
                 </form>
             </div>
-            <a class="btn btn-primary" href="/app/logout">Logout</a>
+            {% if user.is_authenticated %}
+            
+            {% include 'managementApps/partials/dropdown.html' %}
+            {% endif %}
+           
         </div>
 
     </nav>
