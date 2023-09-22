@@ -7,6 +7,10 @@
 <div class="container">
    <div class="card bg-transparent">
        <h2 class="text-center"><i class="fas fa-sign-in-alt"></i> Login</h2>
+
+       {% if error %}
+       <div class="alert alert-danger text-center">{{error}}</div>
+       {% endif %}
        
        <form method="post" action="{% url 'managementApps:custom_login' %}">
           {% csrf_token %}
@@ -23,9 +27,7 @@
            </div>
            
        </form>
-       {% if form.errors %}
-       <p class="text-center text-danger">Authentication Failed!</p>
-       {% endif %}
+       
    </div>
 </div>
 

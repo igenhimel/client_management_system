@@ -1,0 +1,59 @@
+{% include 'managementApps/partials/header.html' %}
+
+{% include 'managementApps/partials/nav.html' %}
+
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+ 
+        {% include 'managementApps/auth/side_nav_user.html' %}
+        <div class="col py-3">
+            <div class="text-center mt-2">
+                <span class="h3">Users List</span>
+                <hr>
+              </div>
+              <table class="table table-striped">
+                <thead>
+                  <tr class="text-center">
+                    <th scope="col">Serial</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Superuser</th>
+                    <th scope="col">Permissions</th>
+                    <th scope="col">Info</th>
+                    <th scope="col">Password</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for user in users %}
+                  <tr class="text-center">
+                    <th scope="row">{{user.id}}</th>
+                    <td>{{user.username}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{% if 'yes' in user.superuser %}
+                        <i class="fa-solid fa-check text-primary"></i>
+                        {% else %}
+                        <i class="fa-solid fa-xmark text-primary"></i>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if 'read' in user.permissions and 'write' in user.permissions %}
+                        <i class="fa-solid fa-eye text-primary"></i>
+                        <span>  </span>
+                        <i class="fa-solid fa-pencil text-primary"></i>
+                        {% elif 'read' in user.permissions %}
+                        <i class="fa-solid fa-eye text-primary"></i>
+                        {% elif 'write' in user.permissions %}
+                        <i class="fa-solid fa-pencil text-primary"></i>
+                        {% endif %}
+
+                    </td>
+                    <td><a href="/app/update_user/{{user.id}}" class="update-site btn btn-dark">Update</a></td>
+                    <td> <a href="#" class="update-site btn btn-dark">Change Password</a></td>
+                 {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        
+        {% include 'managementApps/partials/footer.html' %}

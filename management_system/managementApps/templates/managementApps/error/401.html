@@ -1,0 +1,15 @@
+
+
+{% include 'managementApps/partials/header.html' %}
+
+{% include 'managementApps/partials/nav.html' %}
+
+    <div class="container text-center mt-5">
+        <h1 class="text-danger">
+            {% if error %}
+            {{error}}
+            {% endif %}
+        </h1>
+    </div>
+
+    {% include 'managementApps/partials/footer.html' %}

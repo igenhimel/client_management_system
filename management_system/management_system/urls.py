@@ -19,16 +19,15 @@ from django.conf import settings
 from django.conf.urls.static import static
 from managementApps import views
 
+handler404 = 'managementApps.views.handler404'
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.CustomLoginView.as_view(),name='root_page'),
+    path('',views.custom_login, name='custom_login'),
     path('app/', include('managementApps.urls')),
     
     ]
-
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,5 @@
+
+
 {% include 'managementApps/partials/header.html' %}
 
 {% include 'managementApps/partials/nav.html' %}
@@ -9,7 +11,6 @@
 
     <div class="col py-3">
       <div class="text-center mt-2">
-        {% include 'managementApps/partials/alert.html' %}
         <span class="h3">Site Config</span>
         <hr>
         <a href="/app/home/add-site" class="float-end btn btn-primary me-3"> + Add
@@ -24,7 +25,9 @@
             <th scope="col">DNS</th>
             <th scope="col">Company</th>
             <th scope="col">Country</th>
+            {% if 'write' in user.permissions %}
             <th scope="col">Update</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -36,7 +39,9 @@
             <td>{{site.dns}}</td>
             <td>{{site.company_name}}</td>
             <td>{{site.country_name}}</td>
+            {% if 'write' in user.permissions %}
             <td> <a href="/app/home/site/update/{{site.site_id}}" class="update-site btn btn-dark">Update</a></td>
+            {% endif %}
          {% endfor %}
         </tbody>
       </table>

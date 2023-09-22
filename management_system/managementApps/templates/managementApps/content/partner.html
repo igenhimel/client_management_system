@@ -24,7 +24,9 @@
             <th scope="col">DNS</th>
             <th scope="col">Company</th>
             <th scope="col">Country</th>
+            {% if 'write' in user.permissions %}
             <th scope="col">Update</th>
+            {% endif %}
           </tr>
         </thead>
         <tbody>
@@ -36,9 +38,9 @@
             <td>{{partner.dns}}</td>
             <td>{{partner.company_name}}</td>
             <td>{{partner.country_name}}</td>
-        
+            {% if 'write' in user.permissions %}
               <td> <a href="/app/home/partner/update/{{partner.partner_id}}" class="update-partner btn btn-dark">Update</a></td>
-             
+              {% endif %}
 
 
           </tr>

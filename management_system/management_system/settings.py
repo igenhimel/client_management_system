@@ -27,11 +27,10 @@ LOGOUT_REDIRECT_URL = '/app/login/'
 SECRET_KEY = 'django-insecure-*hby7zwm1fxp6p2f=xf6$_o&w0$-qh42doi8&is)$rlw@slixe'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
+ALLOWED_HOSTS = ['localhost']
+SESSION_COOKIE_AGE = 60*60
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+ 
 ]
-
 
 
 MIDDLEWARE = [
