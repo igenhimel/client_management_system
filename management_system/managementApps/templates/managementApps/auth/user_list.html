@@ -2,6 +2,8 @@
 
 {% include 'managementApps/partials/nav.html' %}
 
+{% include 'managementApps/partials/alert.html' %}
+
 <div class="container-fluid">
     <div class="row flex-nowrap">
  
@@ -48,7 +50,7 @@
 
                     </td>
                     <td><a href="/app/update_user/{{user.id}}" class="update-site btn btn-dark">Update</a></td>
-                    <td> <a href="#" class="update-site btn btn-dark">Change Password</a></td>
+                    <td> <a href="/app/change_password/{{user.id}}" class="update-site btn btn-dark">Change Password</a></td>
                  {% endfor %}
                 </tbody>
               </table>

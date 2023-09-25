@@ -22,17 +22,23 @@ def root_page(request):
 
 @token_required
 def home(request):
-    return render(request, 'managementApps/home.html')
+    return render(request, 'managementApps/base.html')
 
 
 @token_required
 def add_site(request):
-    return render(request, 'managementApps/content/add_site.html')
+    if request.session.get('username'):
+        current_user = User.objects.filter(
+            username=request.session.get('username')).first()
+        if current_user and 'write' in current_user.permissions:
+            return render(request, 'managementApps/content/add_site.html')
+        else:
+            return render(request, 'managementApps/error/401.html',  {'error': 'You are not allowed to add new site'})
 
 
 @token_required
 def site(request):
-    alertMessage = ""
+    message = ""
     username = request.session.get('username', '')
     current_user = User.objects.filter(
         username=request.session.get('username')).first()
@@ -46,12 +52,15 @@ def site(request):
                     company_name=company_name, country_name=country_name)
 
         if (sitename == "" or sitekey == "" or dns == "" or company_name == "" or country_name == ""):
-            alertMessage = "Input Field Cannot be Empty!!"
+            message = "Input Field Cannot be Empty!!"
         else:
             site.save()
+            sites = Site.objects.all().order_by('site_id')
+            message = "New Site Added Successfully"
+            return render(request, 'managementApps/content/site.html', {'sites': sites, 'alert': message, 'username': username, 'user': current_user})
 
     sites = Site.objects.all().order_by('site_id')
-    return render(request, 'managementApps/content/site.html', {'sites': sites, 'alert': alertMessage, 'username': username, 'user': current_user})
+    return render(request, 'managementApps/content/site.html', {'sites': sites, 'username': username, 'user': current_user})
 
 
 @token_required
@@ -77,7 +86,8 @@ def update_site(request, site_id):
                 site.country_name = country_name
                 site.save()
                 sites = Site.objects.all().order_by('site_id')
-                return render(request, 'managementApps/content/site.html', {'site': site, 'sites': sites, 'user': current_user})
+                message = "Site Updated Successfully"
+                return render(request, 'managementApps/content/site.html', {'site': site, 'sites': sites, 'user': current_user, 'alert': message, })
 
             return render(request, 'managementApps/content/update_site.html', {'site': site})
         else:
@@ -86,7 +96,6 @@ def update_site(request, site_id):
 
 @token_required
 def partner(request):
-    alertMessage = ""
     current_user = User.objects.filter(
         username=request.session.get('username')).first()
     if request.method == 'POST':
@@ -102,14 +111,24 @@ def partner(request):
             alertMessage = "Input Field Cannot be Empty!!"
         else:
             partner.save()
+            partners = Partner.objects.all().order_by('partner_id')
+            message = "Partner Added Successfully"
+            return render(request, 'managementApps/content/partner.html', {'partners': partners, 'alert': message, 'user': current_user})
 
     partners = Partner.objects.all().order_by('partner_id')
-    return render(request, 'managementApps/content/partner.html', {'partners': partners, 'alert': alertMessage, 'user': current_user})
+    return render(request, 'managementApps/content/partner.html', {'partners': partners, 'user': current_user})
 
 
 @token_required
 def add_partner(request):
-    return render(request, 'managementApps/content/add_partner.html')
+    if request.session.get('username'):
+        current_user = User.objects.filter(
+            username=request.session.get('username')).first()
+        if current_user and 'write' in current_user.permissions:
+            return render(request, 'managementApps/content/add_partner.html')
+        else:
+            return render(request, 'managementApps/error/401.html',  
+                          {'error': 'You are not allowed to add new partner'})
 
 
 @token_required
@@ -134,7 +153,8 @@ def update_partner(request, partner_id):
                 partner.country_name = country_name
                 partner.save()
                 partners = Partner.objects.all().order_by('partner_id')
-                return render(request, 'managementApps/content/partner.html', {'partner': site, 'partners': partners, 'user': current_user})
+                message = "Partner Updated Successfully"
+                return render(request, 'managementApps/content/partner.html', {'partner': site, 'partners': partners, 'user': current_user, 'alert': message})
 
             return render(request, 'managementApps/content/update_partner.html', {'partner': partner, 'user': current_user})
         else:
@@ -170,8 +190,9 @@ def add_user(request):
                 user.save()
 
                 users = User.objects.all().order_by('id')
+                message = "New User Created Successfully"
                 # Redirect to a page showing the user list or any other appropriate view
-                return render(request, 'managementApps/auth/user_list.html', {'users': users})
+                return render(request, 'managementApps/auth/user_list.html', {'users': users, 'alert': message})
 
         # If the user is not a superuser or not logged in, handle accordingly
         return render(request, 'managementApps/error/401.html', {'error': 'You are not allowed to create a user'})
@@ -239,10 +260,12 @@ def user_list(request):
             return render(request, 'managementApps/error/401.html',  {'error': 'You are not allowed to show this content'})
 
 
-def update_user(request,id):
+@token_required
+def update_user(request, id):
     user = get_object_or_404(User, id=id)
     if request.session.get('username'):
-        current_user = User.objects.filter(username=request.session.get('username')).first()
+        current_user = User.objects.filter(
+            username=request.session.get('username')).first()
         if current_user and 'write' in current_user.permissions:
             if request.method == 'POST':
                 # Retrieve the updated data from the request
@@ -261,6 +284,37 @@ def update_user(request,id):
                 return render(request, 'managementApps/auth/user_list.html', {'users': users})
 
             return render(request, 'managementApps/auth/update_user.html', {'users': user})
+        else:
+            return render(request, 'managementApps/error/401.html',  {'error': 'You are not allowed to update User'})
+
+
+@token_required
+def change_password(request, id):
+    user = get_object_or_404(User, id=id)
+    if request.session.get('username'):
+        current_user = User.objects.filter(
+            username=request.session.get('username')).first()
+        if current_user and 'write' in current_user.permissions:
+            if request.method == 'POST':
+                current_pass = request.POST.get('current_pass')
+                new_pass = request.POST.get('new_pass')
+                confirm_pass = request.POST.get('confirm_pass')
+
+                if not check_password(current_pass, user.password):
+                    message = "password did not match"
+                    return render(request, 'managementApps/auth/change_password.html', {'alert': message, 'users': user})
+                else:
+                    if new_pass == confirm_pass:
+                        user.password = make_password(new_pass)
+                        user.save()
+                        users = User.objects.all().order_by('id')
+                        message = "password has been successfully changed"
+                        return render(request, 'managementApps/auth/user_list.html', {'users': users, 'alert': message})
+                    else:
+                        message = "password did not match"
+                        return render(request, 'managementApps/auth/change_password.html', {'alert': message, 'users': user})
+            else:
+                return render(request, 'managementApps/auth/change_password.html', {'users': user})
         else:
             return render(request, 'managementApps/error/401.html',  {'error': 'You are not allowed to update User'})
 
